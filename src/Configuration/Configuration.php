@@ -17,7 +17,7 @@ class Configuration implements ConfigurationInterface
      */
     public function __construct(ReaderInterface $configurationReader)
     {
-        $this->data = $configurationReader->getConfiguration();
+        $this->data = $configurationReader->getConfiguration('zoho-books');
 
         if (empty($this->data['authToken'])) {
             throw new InvalidOptionException("Missing mandatory key 'authToken' in configuration,

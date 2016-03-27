@@ -1,14 +1,16 @@
 <?php
 return [
-    /**
-     * Obtained authtoken.
-     * Instructions how obtain it over here
-     * https://www.zoho.com/books/api/v3/.
-     */
-    'authtoken' => '',
+    "zoho-books" => [
+        /**
+         * Obtained authtoken.
+         * Instructions how obtain it over here
+         * https://www.zoho.com/books/api/v3/.
+         */
+        'authToken' => '',
 
-    /**
-     * Url where all query will be executed :)
-     */
-    'serviceUri' => 'https://www.zoho.com/books/api/v3'
+        /**
+         * Url where all query will be executed :)
+         */
+        'serviceUri' => 'https://books.zoho.com/api/v3'
+    ]
 ];
