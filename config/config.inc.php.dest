@@ -1,0 +1,14 @@
+<?php
+return [
+    /**
+     * Obtained authtoken.
+     * Instructions how obtain it over here
+     * https://www.zoho.com/books/api/v3/.
+     */
+    'authtoken' => '',
+
+    /**
+     * Url where all query will be executed :)
+     */
+    'serviceUri' => 'https://www.zoho.com/books/api/v3'
+];

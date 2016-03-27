@@ -1,0 +1,6 @@
+/vendor/
+data/
+composer.phar
+composer.lock
+.idea/
+config.inc.php
