@@ -25,9 +25,6 @@ return [
     ZohoBooksAL\UnitOfWork::class => DI\object()
                     ->constructorParameter('mapper', DI\get(ZohoBooksAL\Mapper\GenericMapper::class)),
 
-    Zend\Code\Scanner\DirectoryScanner::class => DI\object()
-                    ->constructorParameter('directory', __DIR__.'/../../src/Entity'),
-
     Zend\Code\Annotation\AnnotationManager::class => DI\object()
                     ->method('attach', DI\get(ZohoBooksAL\Code\Annotation\Parser\AnnotationParser::class)),
 

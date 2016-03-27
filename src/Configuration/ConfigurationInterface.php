@@ -12,4 +12,9 @@ interface ConfigurationInterface
      * @return string
      */
     public function getServiceUri();
+
+    /**
+     * @return array
+     */
+    public function getEntitiesPaths();
 }

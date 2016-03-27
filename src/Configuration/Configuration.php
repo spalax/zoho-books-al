@@ -45,4 +45,12 @@ class Configuration implements ConfigurationInterface
     {
         return $this->data['serviceUri'];
     }
+
+    /**
+     * @return array
+     */
+    public function getEntitiesPaths()
+    {
+        return $this->data['entitiesPaths'];
+    }
 }
