@@ -45,6 +45,29 @@ class EntityManager implements EntityManagerInterface
     }
 
     /**
+     * Just for lazy guys who do not use
+     * DI or just do not want to use it.
+     *
+     * @param string $configFilePath
+     *
+     * @return EntityManager
+     */
+    public static function getInstance($configFilePath = '')
+    {
+        $builder = new \DI\ContainerBuilder();
+        $builder->addDefinitions(__DIR__ . '/../config/di.inc.php');
+        $container = $builder->build();
+        if (!empty($configFilePath)) {
+            $container->set(\ZohoBooksAL\Configuration\Reader\ConfigFileReader::class,
+                \DI\object()
+                    ->constructorParameter('configurationFileName',
+                        $configFilePath));
+        }
+
+        return $container->get('ZohoBooksAL\EntityManager');
+    }
+
+    /**
      * Return specific repository
      * to get entities
      *
