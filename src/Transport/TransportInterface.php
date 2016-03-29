@@ -15,24 +15,23 @@ interface TransportInterface
 
     /**
      * @param UriInterface $uri
-     * @param string $data
+     * @param array $data
      *
      * @return array
      */
-    public function post(UriInterface $uri, $data);
+    public function post(UriInterface $uri, array $data);
 
     /**
      * @param UriInterface $uri
-     *
      * @return array
      */
     public function delete(UriInterface $uri);
 
     /**
      * @param UriInterface $uri
-     * @param string $data
+     * @param array $data
      *
      * @return array
      */
-    public function put(UriInterface $uri, $data);
+    public function put(UriInterface $uri, array $data);
 }

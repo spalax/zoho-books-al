@@ -178,6 +178,17 @@ class GenericMapper implements MapperInterface
     }
 
     /**
+     * @param $collectionPath
+     * @param number $identifier
+     */
+    public function delete($collectionPath, $identifier)
+    {
+        $uri = $this->factory->make(Uri::class, ['uri'=>$this->configuration->getServiceUri().
+                                                        $collectionPath.'/'.$identifier]);
+        $this->transport->delete($uri);
+    }
+
+    /**
      * @param string $collectionPath
      * @param string $collectionItemName
      * @param array $data

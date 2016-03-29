@@ -11,7 +11,7 @@ namespace ZohoBooksAL\Entity;
 class Project implements EntityInterface
 {
     /**
-     * @var string
+     * @var number
      *
      * @ZOHO\Id
      * @ZOHO\Column(name="project_id")
@@ -38,6 +38,20 @@ class Project implements EntityInterface
      * @ZOHO\OneToMany(targetEntity="ZohoBooksAL\Entity\Project\User", name="users")
      */
     protected $users;
+
+    /**
+     * @var \SplObjectStorage
+     *
+     * @ZOHO\OneToMany(targetEntity="ZohoBooksAL\Entity\Project\Task", name="tasks")
+     */
+    protected $tasks;
+
+    /**
+     * @var \SplObjectStorage
+     *
+     * @ZOHO\OneToMany(targetEntity="ZohoBooksAL\Entity\CustomField", name="custom_fields")
+     */
+    protected $customFields;
 
     /**
      * @var string
@@ -77,10 +91,12 @@ class Project implements EntityInterface
     public function __construct()
     {
         $this->users = new \SplObjectStorage();
+        $this->tasks = new \SplObjectStorage();
+        $this->customFields = new \SplObjectStorage();
     }
 
     /**
-     * @return string
+     * @return number
      */
     public function getId()
     {
@@ -88,7 +104,7 @@ class Project implements EntityInterface
     }
 
     /**
-     * @param string $id
+     * @param number $id
      */
     public function setId($id)
     {
@@ -215,6 +231,58 @@ class Project implements EntityInterface
     public function setUsers(array $users)
     {
         $this->users = $users;
+    }
+
+    /**
+     * @return \SplObjectStorage
+     */
+    public function getTasks()
+    {
+        return $this->tasks;
+    }
+
+    /**
+     * @param Project\Task $price
+     */
+    public function addTask(Project\Task $task)
+    {
+        if (!$this->tasks->contains($task)) {
+            $this->tasks->attach($task);
+        }
+    }
+
+    /**
+     * @param \SplObjectStorage $tasks
+     */
+    public function setTasks($tasks)
+    {
+        $this->tasks = $tasks;
+    }
+
+    /**
+     * @return \SplObjectStorage
+     */
+    public function getCustomFields()
+    {
+        return $this->customFields;
+    }
+
+    /**
+     * @param Project\Task $price
+     */
+    public function addCustomField(CustomField $customField)
+    {
+        if (!$this->customFields->contains($customField)) {
+            $this->customFields->attach($customField);
+        }
+    }
+
+    /**
+     * @param \SplObjectStorage $customFields
+     */
+    public function setCustomFields($customFields)
+    {
+        $this->customFields = $customFields;
     }
 }
 

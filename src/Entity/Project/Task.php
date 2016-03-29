@@ -3,7 +3,7 @@ namespace ZohoBooksAL\Entity\Project;
 use ZohoBooksAL\Entity\EntityInterface;
 
 /**
- * TimeEntry entity
+ * Task entity
  */
 class Task implements EntityInterface
 {

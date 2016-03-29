@@ -6,12 +6,12 @@ namespace ZohoBooksAL\Entity;
  *
  * @ZOHO\Service(collectionPath="/users",
  *               collectionName="users",
- *               collectionItemName="user")
+ *               collectionItemName="users")
  */
 class User implements EntityInterface
 {
     /**
-     * @var string
+     * @var number
      *
      * @ZOHO\Id
      * @ZOHO\Column(name="user_id")
@@ -33,7 +33,7 @@ class User implements EntityInterface
     protected $name;
 
     /**
-     * @return string
+     * @return number
      */
     public function getId()
     {
@@ -41,7 +41,7 @@ class User implements EntityInterface
     }
 
     /**
-     * @param string $id
+     * @param number $id
      */
     public function setId($id)
     {

@@ -3,11 +3,9 @@ namespace ZohoBooksAL\Persister;
 
 use DI\FactoryInterface;
 use ZohoBooksAL\Entity\EntityInterface;
-use ZohoBooksAL\EntityManager;
 use ZohoBooksAL\Hydrator\EntityHydrator;
 use ZohoBooksAL\Mapper\MapperInterface;
 use ZohoBooksAL\Metadata\ClassMetadata;
-use ZohoBooksAL\UnitOfWork;
 
 class BasicEntityPersister implements PersisterInterface
 {
@@ -22,11 +20,6 @@ class BasicEntityPersister implements PersisterInterface
     protected $classMetadata;
 
     /**
-     * @var PersistedEntityTracker
-     */
-    protected $entityTracker;
-
-    /**
      * @var FactoryInterface
      */
     protected $factory;
@@ -37,16 +30,13 @@ class BasicEntityPersister implements PersisterInterface
      * @param MapperInterface $mapper
      * @param ClassMetadata $classMetadata
      * @param FactoryInterface $factory
-     * @param PersistedEntityTracker $entityTracker
      */
     public function __construct(MapperInterface $mapper,
                                 ClassMetadata $classMetadata,
-                                PersistedEntityTracker $entityTracker,
                                 FactoryInterface $factory)
     {
         $this->mapper = $mapper;
         $this->factory = $factory;
-        $this->entityTracker = $entityTracker;
         $this->classMetadata = $classMetadata;
     }
 
@@ -68,8 +58,6 @@ class BasicEntityPersister implements PersisterInterface
         $hydrator = $this->factory->make(EntityHydrator::class, ['metadata'=>$this->classMetadata]);
 
         $entity = $hydrator->hydrate($data, $this->factory->make($entityName));
-        
-        $this->entityTracker->track($entity, $hydrator->extract($entity));
         return $entity;
     }
 
@@ -80,24 +68,23 @@ class BasicEntityPersister implements PersisterInterface
     {
         $hydrator = $this->factory->make(EntityHydrator::class, ['metadata'=>$this->classMetadata]);
         $values = $hydrator->extract($entity);
-        
-        if ($this->entityTracker->isNew($entity)) {
+        $id = $entity->{$this->classMetadata->getPrimary()->getGetter()}();
+
+        if (empty($id)) {
             $item = $this->mapper
                          ->create($this->classMetadata->getServiceCollectionPath(),
                                   $this->classMetadata->getServiceCollectionItemName(),
                                   $values);
 
             $hydrator->hydrate($item, $entity);
-            $this->entityTracker->track($entity, $hydrator->extract($entity));
-        } else if (($diffValues = $this->entityTracker->getEntitiesDiff($entity, $values)) !== false) {
+        } else {
             $item = $this->mapper
                          ->update($this->classMetadata->getServiceCollectionPath(),
                                   $this->classMetadata->getServiceCollectionItemName(),
                                   $values[$this->classMetadata->getPrimary()->getField()],
-                                  $diffValues);
+                                  $values);
             
             $hydrator->hydrate($item, $entity);
-            $this->entityTracker->track($entity, $hydrator->extract($entity));
         }
     }
 
@@ -120,7 +107,6 @@ class BasicEntityPersister implements PersisterInterface
         foreach ($items as $item) {
             $hydrator = $this->factory->make(EntityHydrator::class, ['metadata'=>$this->classMetadata]);
             $entity = $hydrator->hydrate($item, $this->factory->make($entityName));
-            $this->entityTracker->track($entity, $item);
             $entities[] = $entity;
         }
 

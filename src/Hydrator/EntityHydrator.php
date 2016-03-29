@@ -93,7 +93,7 @@ class EntityHydrator
 
                 $className = $entityMetadata->getName();
                 
-                if (!$propertyHydratedValue) {
+                if (!$propertyHydratedValue && !is_array($propertyHydratedValue)) {
                     throw new Exception\RuntimeException("Something gone wrong,
                                                            data could not be parsed ".$propertyHydratedValue);
                 }

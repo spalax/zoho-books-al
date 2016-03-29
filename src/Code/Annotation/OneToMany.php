@@ -10,8 +10,6 @@ class OneToMany implements AnnotationInterface
 
     protected $name = '';
 
-    protected $container = 0;
-
     /**
      * Initialize
      *
@@ -34,10 +32,6 @@ class OneToMany implements AnnotationInterface
                 throw new InvalidAttributeValueException("OneToMany relation must not contain nested element");
             }
             $this->name = $matches['name'];
-        }
-
-        if (preg_match("/isContainer\s*?=\s*?[\"|\'](?P<container>[0|1]+?)[\"|\']/", $content, $matches)) {
-            $this->container = intval($matches['container']);
         }
     }
 
@@ -81,13 +75,5 @@ class OneToMany implements AnnotationInterface
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isContainer()
-    {
-        return !!$this->container;
     }
 }
