@@ -99,6 +99,7 @@ class EntityHydrator
                     } else {
                         $entity->{$property->getSetter()}($propertyHydratedValue);
                     }
+                    continue;
                 }
 
                 foreach ($propertyHydratedValue as $propertyHydratedValueItem) {
