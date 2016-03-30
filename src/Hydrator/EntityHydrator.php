@@ -92,10 +92,13 @@ class EntityHydrator
                                  ->make(EntityHydrator::class, ['metadata' => $entityMetadata]);
 
                 $className = $entityMetadata->getName();
-                
-                if (!$propertyHydratedValue && !is_array($propertyHydratedValue)) {
-                    throw new Exception\RuntimeException("Something gone wrong,
-                                                           data could not be parsed ".$propertyHydratedValue);
+
+                if (!is_array($propertyHydratedValue)) {
+                    if (empty($propertyHydratedValue)) {
+                        $entity->{$property->getSetter()}(new \SplObjectStorage());
+                    } else {
+                        $entity->{$property->getSetter()}($propertyHydratedValue);
+                    }
                 }
 
                 foreach ($propertyHydratedValue as $propertyHydratedValueItem) {

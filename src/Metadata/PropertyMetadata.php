@@ -41,6 +41,11 @@ class PropertyMetadata
     protected $getter = '';
 
     /**
+     * @var string
+     */
+    protected $setter = '';
+
+    /**
      * @var bool
      */
     protected $required;
@@ -56,9 +61,27 @@ class PropertyMetadata
     protected $primary = false;
 
     /**
+     * @return string
+     */
+    public function getSetter()
+    {
+        return $this->setter;
+    }
+
+    /**
+     * @param string $setter
+     */
+    protected function setSetter($setter)
+    {
+        $this->setter = $setter;
+    }
+
+
+
+    /**
      * @param string $getter
      */
-    public function setGetter($getter)
+    protected function setGetter($getter)
     {
         $this->getter = $getter;
     }
@@ -74,7 +97,7 @@ class PropertyMetadata
     /**
      * @param boolean $primary
      */
-    public function setPrimary($primary)
+    protected function setPrimary($primary)
     {
         $this->primary = $primary;
     }
@@ -119,6 +142,11 @@ class PropertyMetadata
             throw new InvalidArgumentException("Getter must present in property data");
         }
         $this->setGetter($data['getter']);
+
+        if (!array_key_exists('setter', $data)) {
+            throw new InvalidArgumentException("Setter must present in property data");
+        }
+        $this->setSetter($data['setter']);
 
         if (!array_key_exists('hydrator', $data) || !($data['hydrator'] instanceof \Closure)) {
             throw new InvalidArgumentException("Extractor must present and callable in property data");

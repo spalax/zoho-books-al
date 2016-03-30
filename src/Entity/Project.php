@@ -6,7 +6,7 @@ namespace ZohoBooksAL\Entity;
  *
  * @ZOHO\Service(collectionPath="/projects",
  *               collectionName="projects",
- *               collectionItemName="project")
+ *               collectionItemName="projects")
  */
 class Project implements EntityInterface
 {
@@ -228,7 +228,7 @@ class Project implements EntityInterface
     /**
      * @param \SplObjectStorage $users
      */
-    public function setUsers(array $users)
+    public function setUsers(\SplObjectStorage $users)
     {
         $this->users = $users;
     }
@@ -254,7 +254,7 @@ class Project implements EntityInterface
     /**
      * @param \SplObjectStorage $tasks
      */
-    public function setTasks($tasks)
+    public function setTasks(\SplObjectStorage $tasks)
     {
         $this->tasks = $tasks;
     }
@@ -280,7 +280,7 @@ class Project implements EntityInterface
     /**
      * @param \SplObjectStorage $customFields
      */
-    public function setCustomFields($customFields)
+    public function setCustomFields(\SplObjectStorage $customFields)
     {
         $this->customFields = $customFields;
     }

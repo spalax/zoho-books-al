@@ -175,6 +175,7 @@ class EntityCollector implements CollectorInterface
         $propertyArr['hydrator'] = $annotation->getHydrator();
         $propertyArr['extractor'] = $annotation->getExtractor();
         $propertyArr['handler'] = $this->detectPropertySet($classScanner, $propertyScanner);
+        $propertyArr['setter'] = $propertyArr['handler'];
         $propertyArr['getter'] = $this->detectPropertyGet($classScanner, $propertyScanner);
 
         return $propertyArr;
@@ -202,6 +203,7 @@ class EntityCollector implements CollectorInterface
         $propertyArr['hydrator'] = $annotation->getHydrator();
         $propertyArr['handler'] = $this->detectPropertyAdd($classScanner, $propertyScanner);
         $propertyArr['getter'] = $this->detectPropertyGet($classScanner, $propertyScanner);
+        $propertyArr['setter'] = $this->detectPropertySet($classScanner, $propertyScanner);
 
         $ref = new \ReflectionClass($classScanner->getName());
         if (!$ref->newInstance()->{$propertyArr['getter']}() instanceof \SplObjectStorage) {
