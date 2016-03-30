@@ -12,10 +12,7 @@
 
     "require": {
         "guzzlehttp/guzzle": "^6.1",
-        "zendframework/zend-code": "<3",
-        "php-di/php-di": "^5.2",
-        "ocramius/proxy-manager": "1.0.*",
-        "icanboogie/inflector": "^1.4"
+        "php-di/php-di": "^5.2"
     },
 
     "require-dev": {
