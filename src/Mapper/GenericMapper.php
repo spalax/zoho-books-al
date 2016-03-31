@@ -69,7 +69,7 @@ class GenericMapper implements MapperInterface
      * @throws ClientException If HTTP response status is not 200
      */
     public function fetchAll($collectionPath, $collectionItemName,
-                                array $params = [], $page = 0, $perPage = self::DEFAULT_LIMIT)
+                                array $params = [], $page = 1, $perPage = self::DEFAULT_LIMIT)
     {
         $uri = $this->factory->make(Uri::class, ['uri' => $this->configuration->getServiceUri().$collectionPath]);
 
