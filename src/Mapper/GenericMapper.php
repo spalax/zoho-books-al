@@ -61,30 +61,20 @@ class GenericMapper implements MapperInterface
      * @param string $collectionPath
      * @param string $collectionItemName
      * @param array $params [OPTIONAL]
-     * @param int $offset [OPTIONAL]
-     * @param int $limit [OPTIONAL]
+     * @param int $page [OPTIONAL]
+     * @param int $perPage [OPTIONAL]
      * @return array
      *
      * @throws UnexpectedResponseException If some data/key/name missed in response structure
      * @throws ClientException If HTTP response status is not 200
      */
     public function fetchAll($collectionPath, $collectionItemName,
-                                array $params = [], $offset = null, $limit = null)
+                                array $params = [], $page = 0, $perPage = self::DEFAULT_LIMIT)
     {
         $uri = $this->factory->make(Uri::class, ['uri' => $this->configuration->getServiceUri().$collectionPath]);
 
         foreach ($params as $name=>$value) {
             $uri = $uri->withQueryValue($uri, $name, $value);
-        }
-
-        $page = 1;
-        $perPage = self::DEFAULT_LIMIT;
-
-        if (!is_null($offset) && $offset > 0) {
-            $page = 2;
-            $perPage = $offset;
-        } else if (!is_null($limit)) {
-            $perPage = $limit;
         }
 
         $returnItems = [];
@@ -101,15 +91,13 @@ class GenericMapper implements MapperInterface
 
             $pageContext = $result->page_context;
             $morePages = $pageContext->has_more_page;
-
+            
             $items = $result->{$collectionItemName};
             foreach ($items as $item) {
                 $returnItems[] = (array)$item;
-                if (!is_null($limit) && count($returnItems) >= $limit){
-                    return $returnItems;
-                }
             }
-        } while ($morePages === true);
+            $page++;
+        } while ($morePages == true);
         
         return $returnItems;
     }

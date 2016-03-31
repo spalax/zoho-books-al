@@ -18,15 +18,15 @@ interface MapperInterface
      * @param string $collectionPath
      * @param string $collectionItemName
      * @param array $params [OPTIONAL]
-     * @param int $offset [OPTIONAL]
-     * @param int $limit [OPTIONAL]
+     * @param int $page [OPTIONAL]
+     * @param int $perPage [OPTIONAL]
      * @return array
      *
      * @throws UnexpectedResponseException If some data/key/name missed in response structure
      * @throws ClientException If HTTP response status is not 200
      */
     public function fetchAll($collectionPath, $collectionName,
-                                array $params = [], $offset = null, $limit = null);
+                                array $params = [], $page = null, $perPage = null);
 
     /**
      * Fetch data from remote
